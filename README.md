@@ -24,20 +24,20 @@ This project is designed to be used as a low cost IOT solution for monitoring la
 
 ## TODO
 
-### Server
+#### Server
 
 -   [ ] Raspberry pi setup procedure/script
 -   [ ] Stack installation procedure/script
-    -   [ ] Setup Docker container
+    -   [ ] Setup Docker container ([IOT stack project](https://github.com/SensorsIot/IOTstack) may cover this if used)
 -   [ ] Detail security hardening procedure
 
-### ESP Nodes
+#### ESP Nodes
 
 Software
 
 -   [ ] [OTA Updates](https://arduino-esp8266.readthedocs.io/en/latest/ota_updates/readme.html)
--   [ ] Deep-sleep between measurements for nodes
--   [ ] Batch write to Influx and store during deep-sleep
+-   [ ] Deep sleep between measurements for nodes
+-   [ ] Batch write to Influx and store during deep sleep
 -   [ ] Read battery level through analog input see [here](http://esp8266-projects.org/2015/03/internal-adc-esp8266/)
 
 Hardware
@@ -47,18 +47,25 @@ Hardware
 
 ## Setup
 
-### Node Setup
+#### Node Setup
 
 1. Flash software to ESP using programmer tool. **Be sure to include OTA updates in software as USB programming will be unavailable after assembly in current design.**
 2. Assemble hardware as shown in [Node wiring Schematic](#node-wiring-schematic)
 3. Configure WiFi using [WiFiManager](https://github.com/tzapu/WiFiManager)
 4. Verify assembly and deploy
 
-### Server Setup
+#### Server Setup
 
 1. Flash OS and configure for boot from SSD
-2. Install needed software
+2. Install needed software (see [server software](#server))
 3. Configure software
+    1. InfluxDB
+        1. Database creation
+        2. Privileges
+        3. Retention policy/Downsampling
+    2. Grafana
+        1. Privileges
+        2. Alerts
 4. Harden security
 5. Verify and deploy
 
@@ -131,3 +138,5 @@ The Raspberry Pi acts as the central server, and is assigned a static IP for eas
 ### Node Software Flow Diagram
 
 ![Node Flow Diagram](./Diagrams/node_flow.png)
+
+From a high level perspective the node software consists of 3 stages. First, the node reads the sensor data and stores to the RTC memory so that the data persists through deep sleep. Second, the node enters a deep sleep state to minimize power consumption. Lastly, the node batch uploads the stored sensor data to the server. Power consumption during each stage should be minimized, only powering the necessary components at each stage of the process. The modem should be switched off when not pushing to the server. At each stage in this process there is room for customization of the software. For example, the amount of sensor read/sleep cycles between batch uploads will depend on the RTC memory capacity and the size of data being stored. The desired time between measurements will depend on the desired resolution of data and desired battery life of the node. Multiple measurements may also be recorded and averaged during the read stage to improve data accuracy.
