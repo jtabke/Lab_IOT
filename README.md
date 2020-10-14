@@ -2,6 +2,9 @@
 
 This project is designed to be used as a low cost IOT solution for monitoring laboratory environments and processes. It was originally developed for the central monitoring of -80&deg;C lab freezers to ensure stored sample viability. This project can easily be extended for the monitoring of additional variables.
 
+-   [TODO](#todo)
+    -   [Server](#server)
+    -   [ESP Nodes](#esp-nodes)
 -   [Setup](#setup)
     -   [Node Setup](#node-setup)
     -   [Server Setup](#server-setup)
@@ -18,9 +21,29 @@ This project is designed to be used as a low cost IOT solution for monitoring la
     -   [Node wiring Schematic](#node-wiring-schematic)
     -   [Network Diagram](#network-diagram)
     -   [Node Software Flow Diagram](#node-software-flow-diagram)
--   [TODO](#todo)
-    -   [Server](#server)
-    -   [ESP Nodes](#esp-nodes)
+
+## TODO
+
+### Server
+
+-   [ ] Raspberry pi setup procedure/script
+-   [ ] Stack installation procedure/script
+    -   [ ] Setup Docker container
+-   [ ] Detail security hardening procedure
+
+### ESP Nodes
+
+Software
+
+-   [ ] [OTA Updates](https://arduino-esp8266.readthedocs.io/en/latest/ota_updates/readme.html)
+-   [ ] Deep-sleep between measurements for nodes
+-   [ ] Batch write to Influx and store during deep-sleep
+-   [ ] Read battery level through analog input see [here](http://esp8266-projects.org/2015/03/internal-adc-esp8266/)
+
+Hardware
+
+-   [ ] Measure current consumption for accurate battery life estimation
+-   [ ] Complete CAD modeling of case for nodes
 
 ## Setup
 
@@ -108,26 +131,3 @@ The Raspberry Pi acts as the central server, and is assigned a static IP for eas
 ### Node Software Flow Diagram
 
 ![Node Flow Diagram](./Diagrams/node_flow.png)
-
-## TODO
-
-### Server
-
--   [ ] Raspberry pi setup procedure/script
--   [ ] Stack installation procedure/script
-    -   [ ] Setup Docker container
--   [ ] Detail security hardening procedure
-
-### ESP Nodes
-
-Software
-
--   [ ] [OTA Updates](https://arduino-esp8266.readthedocs.io/en/latest/ota_updates/readme.html)
--   [ ] Deep-sleep between measurements for nodes
--   [ ] Batch write to Influx and store during deep-sleep
--   [ ] Read battery level through analog input see [here](http://esp8266-projects.org/2015/03/internal-adc-esp8266/)
-
-Hardware
-
--   [ ] Measure current consumption for accurate battery life estimation
--   [ ] Complete CAD modeling of case for nodes
